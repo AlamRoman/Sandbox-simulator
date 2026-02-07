@@ -52,6 +52,7 @@ class Particle{
 class Air extends Particle{
     constructor(x,y){
         super(elementType.AIR,x,y,0,0,false, 0);
+        this.color = "#000"
     }
 }
 

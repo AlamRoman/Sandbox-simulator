@@ -5,15 +5,134 @@ body{
 #canvas_container{
     display: grid;
     place-items: center;
-    margin-top: 50px;
+    margin-top: 2%;
 }
 
 .text{
     color: white;
 }
 
-#input_form{
+.hotbar {
     position: absolute;
-    top: 30px;
-    right: 50px;
+    bottom: 5px; 
+    left: 50%;
+    transform: translateX(-50%);
+    
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    
+    background: rgba(30, 41, 59, 0.9);
+    padding: 5px 10px;
+    border: 2px solid #475569;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.hotbar input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.hotbarItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin: 0 8px;
+    cursor: pointer;
+    background-color: #334155;
+    border: 3px solid #64748b;
+    border-radius: 12px;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+.hotbarItem img {
+    width: 80%;
+    height: 80%;
+    margin: 0 auto;
+    object-fit: contain;
+    pointer-events: none;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+
+.hotbarItem:hover {
+    background-color: #475569;
+    border-color: #94a3b8;
+}
+
+input[type="radio"]:checked + .hotbarItem {
+    background-color: #1e293b;
+    border-color: #fbbf24;
+    transform: translateY(-8px) scale(1.1);
+    box-shadow: 0 8px 15px rgba(251, 191, 36, 0.3);
+}
+
+input[type="radio"]:checked + .hotbarItem::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle, rgba(251, 191, 36, 0.2) 0%, transparent 70%);
+}
+
+.hotbar div {
+    display: flex;
+}
+
+#clearAllBtn {
+    display: none;
+}
+
+.hotbarItem[for="clearAllBtn"] {
+    background-color: #334155;
+    border: 2px solid #64748b;
+    margin: 0 8px;
+}
+
+.hotbarItem[for="clearAllBtn"]:hover {
+    background-color: #475569;
+    border-color: #94a3b8;
+}
+
+.hotbarItem[for="clearAllBtn"]:active {
+    background-color: #1e293b;
+    border-color: #fbbf24;
+    transform: translateY(2px);
+    transition: 0.05s;
+}
+
+.divider {
+    width: 5px;
+    height: 40px;
+    background-color: #475569;
+    border-radius: 5px;
+    margin: 0 10px;    
+    align-self: center;
+    opacity: 0.5;      
+}
+
+@media (max-width: 600px) {
+    .hotbar {
+        bottom: 15px;
+        padding: 6px 10px;
+        border-radius: 15px;
+    }
+
+    .hotbarItem {
+        width: 45px;
+        height: 45px;
+        margin: 0 5px;
+        border-width: 2px;
+    }
+    
+    input[type="radio"]:checked + .hotbarItem {
+        transform: translateY(-5px) scale(1.05);
+    }
 }

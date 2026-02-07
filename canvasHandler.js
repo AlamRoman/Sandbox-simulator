@@ -37,6 +37,27 @@ window.addEventListener('keydown', (event) => {
     }
 });
 
+const clearBtn = document.getElementById('clearAll');
+
+clearBtn.addEventListener('click', () => {
+    resetSandbox();
+});
+
+document.querySelectorAll('input[name="selectedElement"]').forEach(radio => {
+    radio.addEventListener('change', (e) => {
+        switch(e.target.value){
+            case "1":
+                selectedElement = elementType.SAND;
+                break;
+            case "2":
+                selectedElement = elementType.WATER;
+                break;
+            case "3":
+                selectedElement = elementType.STONE;
+                break;
+        }
+    });
+});
 
 function fixDPI(canvas, ctx) {
     const dpr = window.devicePixelRatio || 1;

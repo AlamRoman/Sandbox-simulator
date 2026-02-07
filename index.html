@@ -12,6 +12,38 @@
         <canvas id="canvas" style="width: 1000px; height: 500px; border:1px solid #fff; touch-action: none;"></canvas>
     </div>
 
+    <div class="hotbar">
+        <div>
+            <input type="radio" id="selectSand" name="selectedElement" value="1" checked>
+            <label class="hotbarItem" for="selectSand">
+                <img src="img/sand_icon.png" alt="Sand">
+            </label>
+        </div>
+    
+        <div>
+            <input type="radio" id="selectWater" name="selectedElement" value="2">
+            <label class="hotbarItem" for="selectWater">
+                <img src="img/water_icon.png" alt="Water">
+            </label>
+        </div>
+    
+        <div>
+            <input type="radio" id="selectStone" name="selectedElement" value="3">
+            <label class="hotbarItem" for="selectStone">
+                <img src="img/stone_icon.png" alt="Stone">
+            </label>
+        </div>
+
+        <div class="divider"></div>
+
+        <div id="clearAll">
+            <input type="button" id="clearAllBtn" name="selectedElement" value="clear">
+            <label class="hotbarItem" for="clearAllBtn">
+                <img src="img/clear_icon.png" alt="Clear all">
+            </label>
+        </div>
+    </div>
+
     <script src="canvasHandler.js"></script>
     <script src="particles.js"></script>
     <script src="gameLogic.js"></script>
