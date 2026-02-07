@@ -34,6 +34,8 @@ window.addEventListener('keydown', (event) => {
     } else if (event.key === 'c') {
         console.log("Deleting particles: ", particles.length);
         resetSandbox();
+    }else if (event.key === 'e') {
+        selectedElement = elementType.ERASER;
     }
 });
 
@@ -46,6 +48,9 @@ clearBtn.addEventListener('click', () => {
 document.querySelectorAll('input[name="selectedElement"]').forEach(radio => {
     radio.addEventListener('change', (e) => {
         switch(e.target.value){
+            case "0":
+                selectedElement = elementType.ERASER;
+                break;
             case "1":
                 selectedElement = elementType.SAND;
                 break;

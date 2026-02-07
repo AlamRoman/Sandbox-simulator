@@ -32,9 +32,7 @@ function addParticle(x, y) {
 
                 if (tx >= 0 && tx < GRID_WIDTH && ty >= 0 && ty < GRID_HEIGHT) {
                     
-                    if (sandbox[tx][ty] === null) {
-                        createParticle(tx, ty);
-                    }
+                    createParticle(tx, ty);
                 }
             }
         }
@@ -42,7 +40,14 @@ function addParticle(x, y) {
 }
 
 function createParticle(x,y){
+    if(sandbox[x][y] != null){
+        deleteParticle(x,y);
+    }
+
     switch (selectedElement) {
+        case elementType.ERASER:
+            deleteParticle(x,y);
+            break;
         case elementType.SAND:
             particles.push(new Sand(x,y));
             break;
@@ -53,4 +58,17 @@ function createParticle(x,y){
             particles.push(new Stone(x,y));
             break;
     }
+}
+
+function deleteParticle(x,y) {
+    if (sandbox[x][y] === null) {
+        return;
+    }
+    
+    let index = particles.findIndex(p => p.x === x && p.y === y);
+
+    particles[index] = particles[particles.length - 1];
+    particles.pop();
+
+    sandbox[x][y] = null;
 }

@@ -1,5 +1,5 @@
 const elementType = {
-    AIR: 0,
+    ERASER: 0,
     SAND: 1,
     WATER: 2,
     STONE: 3
@@ -46,13 +46,6 @@ class Particle{
             sandbox[px][py] = null;
         }
         sandbox[this.x][this.y] = this;
-    }
-}
-
-class Air extends Particle{
-    constructor(x,y){
-        super(elementType.AIR,x,y,0,0,false, 0);
-        this.color = "#000"
     }
 }
 
