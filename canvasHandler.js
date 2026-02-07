@@ -32,6 +32,7 @@ window.addEventListener('keydown', (event) => {
     }else if (event.key === '3') {
         selectedElement = elementType.STONE;
     } else if (event.key === 'c') {
+        console.log("Deleting particles: ", particles.length);
         resetSandbox();
     }
 });
@@ -46,6 +47,6 @@ function fixDPI(canvas, ctx) {
 }
 
 function draw(p){
-    ctx.fillStyle = elementColor.get(p.elementType);
-    ctx.fillRect(p.x*PARTICLE_SIZE, p.y*PARTICLE_SIZE,PARTICLE_SIZE,PARTICLE_SIZE);
+    ctx.fillStyle = p.color;
+    ctx.fillRect(p.x*PARTICLE_SIZE, p.y*PARTICLE_SIZE,PARTICLE_SIZE+1,PARTICLE_SIZE+1);
 }
