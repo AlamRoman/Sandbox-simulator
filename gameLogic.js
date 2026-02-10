@@ -68,13 +68,10 @@ function createParticle(x, y, type = selectedElement) {
 }
 
 function deleteParticle(x,y) {
-    const p = sandbox[x][y];
-    if (!p) return;
+    let p = sandbox[x][y];
+    if (p == null) return;
     
-    const index = particles.indexOf(p);
-
-    particles[index] = particles[particles.length - 1];
-    particles.pop();
+    p.isDead = true;
 
     sandbox[x][y] = null;
 }

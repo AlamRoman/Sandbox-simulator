@@ -7,10 +7,17 @@ function loop(currentTime) {
     if (deltaTime < 0.2) { 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        particles.forEach(particle => {
-            particle.calculatePosition();
-            draw(particle);
-        });
+        for (let i = 0; i < particles.length; i++) {
+            if (!particles[i].isDead) {
+                particles[i].calculatePosition();
+            }
+        }
+        
+        particles = particles.filter(p => !p.isDead);
+
+        for (let i = 0; i < particles.length; i++) {
+            draw(particles[i]);
+        }
     }
 
     requestAnimationFrame(loop);

@@ -22,6 +22,7 @@ class Particle{
         this.type = type;
         this.x = x;
         this.y = y;
+        this.isDead = false;
 
         this.isGravity = false;
         this.isFlammable = false;
@@ -301,7 +302,9 @@ class Wood extends Particle {
                 deleteParticle(tx, ty);
 
                 if (myRandom() < 0.9) {
-                    createParticle(tx, ty, elementType.FIRE);
+                    if (this.y - 1 >= 0 && sandbox[this.x][this.y - 1] === null) {
+                        createParticle(this.x, this.y, elementType.FIRE);
+                    }
                 }else{
                     createParticle(tx, ty, elementType.ASH);
                 }
