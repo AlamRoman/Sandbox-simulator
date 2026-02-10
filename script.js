@@ -4,10 +4,10 @@ const HEIGHT = 500;
 const ctx = canvas.getContext("2d");
 
 const PARTICLE_SIZE = 5;
-const GRID_WIDTH = WIDTH / PARTICLE_SIZE;
-const GRID_HEIGHT = HEIGHT / PARTICLE_SIZE;
+const GRID_WIDTH = Math.floor(WIDTH / PARTICLE_SIZE);
+const GRID_HEIGHT = Math.floor(HEIGHT / PARTICLE_SIZE);
 
-var selectedElement = elementType.SAND;
+var selectedElement = elementType.STEAM;
 
 let sandbox = Array.from({ length: GRID_WIDTH }, () =>
     Array(GRID_HEIGHT).fill(null)

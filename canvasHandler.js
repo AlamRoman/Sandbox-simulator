@@ -70,6 +70,9 @@ document.querySelectorAll('input[name="selectedElement"]').forEach(radio => {
             case "5":
                 selectedElement = elementType.WOOD;
                 break;
+            case "7":
+                selectedElement = elementType.STEAM;
+                break;
         }
     });
 });

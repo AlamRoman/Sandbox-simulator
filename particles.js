@@ -5,7 +5,8 @@ const elementType = {
     STONE: 3,
     FIRE: 4,
     WOOD: 5,
-    ASH: 6
+    ASH: 6,
+    STEAM: 7
 }
 
 class Velocity{
@@ -69,7 +70,7 @@ class Sand extends Particle{
         this.isFlammable = false;
         this.density = 1600;
 
-        this.color = `hsl(40, ${80 + Math.random() * 20}%, ${60 + Math.random() * 10}%)`;
+        this.color = `hsl(40, ${80 + myRandom() * 20}%, ${60 + myRandom() * 10}%)`;
     }
 
     calculatePosition() {
@@ -84,7 +85,7 @@ class Sand extends Particle{
             moved = true;
         }
         else {
-            let dir = Math.random() < 0.5 ? -1 : 1;
+            let dir = myRandom() < 0.5 ? -1 : 1;
             
             if (this.canMoveTo(this.x + dir, this.y + 1)) {
                 this.x += dir;
@@ -108,13 +109,13 @@ class Water extends Particle{
         this.isFlammable = false;
         this.density = 1000;
     
-        this.color = `hsl(${200 + Math.random() * 15}, 80%, ${35 + Math.random() * 15}%)`;
+        this.color = `hsl(${200 + myRandom() * 15}, 80%, ${35 + myRandom() * 15}%)`;
     }
 
     calculatePosition() {
 
-        if(Math.random()<0.005){ 
-            this.color = `hsl(${200 + Math.random() * 15}, 80%, ${35 + Math.random() * 15}%)`;
+        if(myRandom()<0.005){ 
+            this.color = `hsl(${200 + myRandom() * 15}, 80%, ${35 + myRandom() * 15}%)`;
         }
 
         if (this.y + 1 >= sandbox[0].length) return;
@@ -129,7 +130,7 @@ class Water extends Particle{
         } 
         
         if (!moved) {
-            let dir = Math.random() < 0.5 ? -1 : 1;
+            let dir = myRandom() < 0.5 ? -1 : 1;
             if (this.canMoveTo(this.x + dir, this.y + 1)) {
                 this.x += dir;
                 this.y += 1;
@@ -142,7 +143,7 @@ class Water extends Particle{
         }
     
         if (!moved) {
-            let flowDir = Math.random() < 0.5 ? -1 : 1;
+            let flowDir = myRandom() < 0.5 ? -1 : 1;
             let speed = 5;
         
             for (let i = 0; i < speed; i++) {
@@ -182,8 +183,8 @@ class Fire extends Particle {
         this.isGravity = false;
         this.density = 5;
 
-        this.life = 5 + Math.random() * 20;
-        this.color = `hsl(${10 + Math.random() * 20}, 100%, 50%)`;
+        this.life = 5 + myRandom() * 20;
+        this.color = `hsl(${10 + myRandom() * 20}, 100%, 50%)`;
     }
 
     calculatePosition() {
@@ -207,9 +208,9 @@ class Fire extends Particle {
         let moved = false;
 
         let dirY = -1; 
-        let dirX = Math.random() < 0.5 ? -1 : 1;
+        let dirX = myRandom() < 0.5 ? -1 : 1;
 
-        if(Math.random() < 0.2){
+        if(myRandom() < 0.2){
             if (this.canMoveTo(this.x + dirX, this.y + dirY)) {
                 this.x += dirX;
                 this.y += dirY;
@@ -247,10 +248,12 @@ class Fire extends Particle {
                     
                     if (target && target.type === elementType.WATER) {
                         deleteParticle(this.x, this.y);
+                        deleteParticle(tx,ty);
+                        createParticle(tx,ty,elementType.STEAM);
                         return;
                     }
 
-                    if(Math.random() < 0.7){
+                    if(myRandom() < 0.7){
                         if (target && target.isFlammable) {
                             target.burning = true;
                         }
@@ -270,7 +273,7 @@ class Wood extends Particle {
         this.baseColor = "#451b0c";
         this.color = this.baseColor;
         
-        this.fuel = 100 + Math.random() * 100;
+        this.fuel = 100 + myRandom() * 100;
         this.burning = false;
         this.wetness = 0;
     }
@@ -284,6 +287,7 @@ class Wood extends Particle {
             this.color = "#2a1208";
         } else if (!this.burning) {
             this.isFlammable = true;
+            this.color = this.baseColor;
         }
 
         if (this.burning) {
@@ -296,7 +300,7 @@ class Wood extends Particle {
                 let ty = this.y;
                 deleteParticle(tx, ty);
 
-                if (Math.random() < 0.8) {
+                if (myRandom() < 0.9) {
                     createParticle(tx, ty, elementType.FIRE);
                 }else{
                     createParticle(tx, ty, elementType.ASH);
@@ -312,14 +316,14 @@ class Wood extends Particle {
                     let neighbor = sandbox[nx][ny];
 
                     if (neighbor && neighbor.isFlammable && !neighbor.burning) {
-                        if (Math.random() < 0.01) {
+                        if (myRandom() < 0.01  && neighbor.wetness <= 0) {
                             neighbor.burning = true;
                         }
                     }
                 }
             }
     
-            if (Math.random() < 0.05) {
+            if (myRandom() < 0.05) {
                 if (this.y - 1 >= 0 && sandbox[this.x][this.y - 1] === null) {
                     createParticle(this.x, this.y - 1, elementType.FIRE);
                 }
@@ -356,7 +360,7 @@ class Ash extends Particle {
         this.isFlammable = false;
         this.density = 400;
 
-        this.color = `hsl(0, 0%, ${30 + Math.random() * 20}%)`;
+        this.color = `hsl(0, 0%, ${30 + myRandom() * 20}%)`;
     }
 
     calculatePosition() {
@@ -371,14 +375,14 @@ class Ash extends Particle {
                               (this.x - 1 < 0 || sandbox[this.x - 1][this.y] !== null);
     
         if (!(isUnderneath && isBlockedSide)) {
-            let p = Math.random();
+            let p = myRandom();
             
             if (p < 0.3) {
                 if (this.canMoveTo(this.x, this.y + 1)) {
                     this.y += 1;
                     moved = true;
                 } else {
-                    let dir = Math.random() < 0.5 ? -1 : 1;
+                    let dir = myRandom() < 0.5 ? -1 : 1;
                     if (this.canMoveTo(this.x + dir, this.y + 1)) {
                         this.x += dir;
                         this.y += 1;
@@ -392,7 +396,7 @@ class Ash extends Particle {
             } 
             else if (p < 0.8) {
                 if (this.canMoveTo(this.x, this.y + 1)) {
-                    let dirX = Math.random() < 0.5 ? -1 : 1;
+                    let dirX = myRandom() < 0.5 ? -1 : 1;
                     if (this.canMoveTo(this.x + dirX, this.y)) {
                         this.x += dirX;
                         moved = true;
@@ -402,5 +406,74 @@ class Ash extends Particle {
         }
     
         if (moved) this.updateSandBox(px, py);
+    }
+}
+
+class Steam extends Particle {
+    constructor(x, y) {
+        super(elementType.STEAM, x, y);
+        this.isGravity = false;
+        this.isFlammable = false;
+        this.density = 10;
+        this.maxLife = 300 + myRandom() * 100;
+        this.life = this.maxLife;
+        this.color = "white";
+    }
+
+    calculatePosition() {
+        this.life--;
+
+        if (this.life <= 0) {
+            deleteParticle(this.x, this.y);
+            if (this.life < this.life / 2 && myRandom() < 0.03) { 
+                createParticle(this.x, this.y, elementType.WATER);
+            }
+            return;
+        }
+    
+        let b = 180 + Math.floor((this.life / this.maxLife) * 75);
+        let r = (this.life < 50) ? Math.max(100, b - 50) : b;
+        let g = (this.life < 50) ? Math.max(150, b - 20) : b;
+        this.color = `rgb(${r}, ${g}, ${b})`;
+
+        let px = this.x;
+        let py = this.y;
+        let moved = false;
+
+        if (myRandom() < 0.5) { 
+            if (this.canMoveTo(this.x, this.y - 1)) {
+                this.y -= 1;
+                moved = true;
+            } else {
+                let dir = myRandom() < 0.5 ? -1 : 1;
+                if (this.canMoveTo(this.x + dir, this.y - 1)) {
+                    this.x += dir;
+                    this.y -= 1;
+                    moved = true;
+                }
+            }
+        }
+        
+        if (!moved) {
+            let dir = myRandom() < 0.5 ? -1 : 1;
+
+            if (this.canMoveTo(this.x + dir, this.y)) {
+                this.x += dir;
+                moved = true;
+            } else if (this.canMoveTo(this.x - dir, this.y)) {
+                this.x -= dir;
+                moved = true;
+            }
+        }
+
+        if (moved) {
+            this.updateSandBox(px, py);
+        } else {
+            if (this.life < 50 && myRandom() < 0.06) {
+                deleteParticle(this.x, this.y);
+                createParticle(this.x, this.y, elementType.WATER);
+                return;
+            }
+        }
     }
 }
