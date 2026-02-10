@@ -1,5 +1,3 @@
-console.log("hiii")
-
 const canvas = document.getElementById("canvas");
 const WIDTH  = 1000;
 const HEIGHT = 500;

@@ -9,7 +9,6 @@ function loop(currentTime) {
 
         particles.forEach(particle => {
             particle.calculatePosition();
-            updatePosition(particle, deltaTime);
             draw(particle);
         });
     }

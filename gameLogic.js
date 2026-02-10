@@ -9,14 +9,6 @@ function resetSandbox() {
     particles.length = 0;
 }
 
-
-function updatePosition(p, deltaTime){
-
-    if(p.isGravity){
-        p.calculatePosition();
-    } 
-}
-
 function addParticle(x, y) {
     let stroke = 3;
 
@@ -39,33 +31,35 @@ function addParticle(x, y) {
     }
 }
 
-function createParticle(x,y){
-    if(sandbox[x][y] != null){
-        deleteParticle(x,y);
+function createParticle(x, y, type = selectedElement) {
+    
+    if (x < 0 || x >= GRID_WIDTH || y < 0 || y >= GRID_HEIGHT) return;
+
+    if (sandbox[x][y] != null) {
+        deleteParticle(x, y);
     }
 
-    switch (selectedElement) {
-        case elementType.ERASER:
-            deleteParticle(x,y);
-            break;
-        case elementType.SAND:
-            particles.push(new Sand(x,y));
-            break;
-        case elementType.WATER:
-            particles.push(new Water(x,y));
-            break;
-        case elementType.STONE:
-            particles.push(new Stone(x,y));
-            break;
+    if (type === elementType.ERASER) return;
+
+    let p;
+    switch (type) {
+        case elementType.SAND:  p = new Sand(x, y);  break;
+        case elementType.WATER: p = new Water(x, y); break;
+        case elementType.STONE: p = new Stone(x, y); break;
+        case elementType.FIRE:  p = new Fire(x, y);  break;
+        case elementType.WOOD:  p = new Wood(x, y);  break;
+    }
+
+    if (p) {
+        particles.push(p);
     }
 }
 
 function deleteParticle(x,y) {
-    if (sandbox[x][y] === null) {
-        return;
-    }
+    const p = sandbox[x][y];
+    if (!p) return;
     
-    let index = particles.findIndex(p => p.x === x && p.y === y);
+    const index = particles.indexOf(p);
 
     particles[index] = particles[particles.length - 1];
     particles.pop();

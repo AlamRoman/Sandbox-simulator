@@ -31,11 +31,15 @@ window.addEventListener('keydown', (event) => {
         selectedElement = elementType.WATER;
     }else if (event.key === '3') {
         selectedElement = elementType.STONE;
+    }else if (event.key === '4') {
+        selectedElement = elementType.FIRE;
+    }else if (event.key === '5') {
+        selectedElement = elementType.WOOD;
     } else if (event.key === 'c') {
         console.log("Deleting particles: ", particles.length);
         resetSandbox();
     }else if (event.key === 'e') {
-        selectedElement = elementType.ERASER;
+        selectedElement = elementType.VOID;
     }
 });
 
@@ -49,7 +53,7 @@ document.querySelectorAll('input[name="selectedElement"]').forEach(radio => {
     radio.addEventListener('change', (e) => {
         switch(e.target.value){
             case "0":
-                selectedElement = elementType.ERASER;
+                selectedElement = elementType.VOID;
                 break;
             case "1":
                 selectedElement = elementType.SAND;
@@ -59,6 +63,12 @@ document.querySelectorAll('input[name="selectedElement"]').forEach(radio => {
                 break;
             case "3":
                 selectedElement = elementType.STONE;
+                break;
+            case "4":
+                selectedElement = elementType.FIRE;
+                break;
+            case "5":
+                selectedElement = elementType.WOOD;
                 break;
         }
     });
