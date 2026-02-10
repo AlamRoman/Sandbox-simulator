@@ -1,5 +1,15 @@
 const g = 9.81;
 
+let seed = 123456789;
+
+function myRandom() {
+    seed ^= seed << 13;
+    seed ^= seed >> 17;
+    seed ^= seed << 5;
+    
+    return (seed >>> 0) / 4294967296;
+}
+
 function resetSandbox() {
     for (let i = 0; i < GRID_WIDTH; i++) {
         for (let j = 0; j < GRID_HEIGHT; j++) {
@@ -49,6 +59,7 @@ function createParticle(x, y, type = selectedElement) {
         case elementType.FIRE:  p = new Fire(x, y);  break;
         case elementType.WOOD:  p = new Wood(x, y);  break;
         case elementType.ASH:  p = new Ash(x, y);  break;
+        case elementType.STEAM:  p = new Steam(x, y);  break;
     }
 
     if (p) {
