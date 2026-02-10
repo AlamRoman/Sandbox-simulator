@@ -32,7 +32,7 @@ function addParticle(x, y) {
 }
 
 function createParticle(x, y, type = selectedElement) {
-    
+
     if (x < 0 || x >= GRID_WIDTH || y < 0 || y >= GRID_HEIGHT) return;
 
     if (sandbox[x][y] != null) {
@@ -48,6 +48,7 @@ function createParticle(x, y, type = selectedElement) {
         case elementType.STONE: p = new Stone(x, y); break;
         case elementType.FIRE:  p = new Fire(x, y);  break;
         case elementType.WOOD:  p = new Wood(x, y);  break;
+        case elementType.ASH:  p = new Ash(x, y);  break;
     }
 
     if (p) {

@@ -4,7 +4,8 @@ const elementType = {
     WATER: 2,
     STONE: 3,
     FIRE: 4,
-    WOOD: 5
+    WOOD: 5,
+    ASH: 6
 }
 
 class Velocity{
@@ -293,8 +294,13 @@ class Wood extends Particle {
             if (this.fuel <= 0) {
                 let tx = this.x;
                 let ty = this.y;
-                deleteParticle(tx, ty); 
-                createParticle(tx, ty, elementType.FIRE);
+                deleteParticle(tx, ty);
+
+                if (Math.random() < 0.8) {
+                    createParticle(tx, ty, elementType.FIRE);
+                }else{
+                    createParticle(tx, ty, elementType.ASH);
+                }
                 return;
             }
 
@@ -340,5 +346,61 @@ class Wood extends Particle {
                 }
             }
         }
+    }
+}
+
+class Ash extends Particle {
+    constructor(x,y){
+        super(elementType.ASH, x, y);
+        this.isGravity = true;
+        this.isFlammable = false;
+        this.density = 400;
+
+        this.color = `hsl(0, 0%, ${30 + Math.random() * 20}%)`;
+    }
+
+    calculatePosition() {
+        if (this.y + 1 >= sandbox[0].length) return;
+    
+        let px = this.x;
+        let py = this.y;
+        let moved = false;
+    
+        const isUnderneath = this.y + 1 < sandbox[0].length && sandbox[this.x][this.y + 1] !== null;
+        const isBlockedSide = (this.x + 1 >= sandbox.length || sandbox[this.x + 1][this.y] !== null) && 
+                              (this.x - 1 < 0 || sandbox[this.x - 1][this.y] !== null);
+    
+        if (!(isUnderneath && isBlockedSide)) {
+            let p = Math.random();
+            
+            if (p < 0.3) {
+                if (this.canMoveTo(this.x, this.y + 1)) {
+                    this.y += 1;
+                    moved = true;
+                } else {
+                    let dir = Math.random() < 0.5 ? -1 : 1;
+                    if (this.canMoveTo(this.x + dir, this.y + 1)) {
+                        this.x += dir;
+                        this.y += 1;
+                        moved = true;
+                    } else if (this.canMoveTo(this.x - dir, this.y + 1)) {
+                        this.x -= dir;
+                        this.y += 1;
+                        moved = true;
+                    }
+                }
+            } 
+            else if (p < 0.8) {
+                if (this.canMoveTo(this.x, this.y + 1)) {
+                    let dirX = Math.random() < 0.5 ? -1 : 1;
+                    if (this.canMoveTo(this.x + dirX, this.y)) {
+                        this.x += dirX;
+                        moved = true;
+                    }
+                }
+            }
+        }
+    
+        if (moved) this.updateSandBox(px, py);
     }
 }
