@@ -9,7 +9,7 @@ function loop(currentTime) {
 
         for (let i = 0; i < particles.length; i++) {
             if (!particles[i].isDead) {
-                particles[i].calculatePosition();
+                particles[i].update();
             }
         }
         

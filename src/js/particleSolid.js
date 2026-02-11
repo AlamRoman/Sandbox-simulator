@@ -18,11 +18,11 @@ class ParticleSolid extends Particle{
         else {
             let dir = myRandom() < 0.5 ? -1 : 1;
             
-            if (this.canMoveTo(this.x + dir, this.y + 1) && (this.canMoveTo(this.x + dir, this.y) || this.canMoveTo(this.x, this.y + 1))) {
+            if (this.canMoveTo(this.x + dir, this.y + 1)) {
                 this.x += dir;
                 this.y += 1;
                 moved = true;
-            } else if (this.canMoveTo(this.x - dir, this.y + 1) && (this.canMoveTo(this.x - dir, this.y) || this.canMoveTo(this.x, this.y + 1))) {
+            } else if (this.canMoveTo(this.x - dir, this.y + 1)) {
                 this.x -= dir;
                 this.y += 1;
                 moved = true;
@@ -43,32 +43,8 @@ class Sand extends ParticleSolid{
         this.color = `hsl(40, ${80 + myRandom() * 20}%, ${60 + myRandom() * 10}%)`;
     }
 
-    calculatePosition() {
-        if (this.y + 1 >= sandbox[0].length) return;
-    
-        let px = this.x;
-        let py = this.y;
-        let moved = false;
-
-        if (this.canMoveTo(this.x, this.y + 1)) {
-            this.y += 1;
-            moved = true;
-        }
-        else {
-            let dir = myRandom() < 0.5 ? -1 : 1;
-            
-            if (this.canMoveTo(this.x + dir, this.y + 1) && (this.canMoveTo(this.x + dir, this.y) || this.canMoveTo(this.x, this.y + 1))) {
-                this.x += dir;
-                this.y += 1;
-                moved = true;
-            } else if (this.canMoveTo(this.x - dir, this.y + 1) && (this.canMoveTo(this.x - dir, this.y) || this.canMoveTo(this.x, this.y + 1))) {
-                this.x -= dir;
-                this.y += 1;
-                moved = true;
-            }
-        }
-    
-        if (moved) this.updateSandBox(px, py);
+    update() {
+        this.calculatePosition();
     }
 }
 
@@ -79,7 +55,8 @@ class Stone extends ParticleSolid{
         this.isFlammable = false;
         this.density = 2500;
         
-        this.color = "gray";
+        const v = 80 + Math.floor(myRandom() * 20); 
+        this.color = `rgb(${v}, ${v + 2}, ${v + 10})`;
     }
 }
 
@@ -89,7 +66,9 @@ class Wood extends ParticleSolid {
         this.isGravity = false;
         this.isFlammable = true;
         this.density = 500;
-        this.baseColor = "#451b0c";
+        
+        const v = Math.floor(myRandom() * 10); 
+        this.baseColor = `rgb(${60 + v}, ${35 + v}, ${15 + v})`;
         this.color = this.baseColor;
         
         this.fuel = 100 + myRandom() * 100;
@@ -97,7 +76,7 @@ class Wood extends ParticleSolid {
         this.wetness = 0;
     }
 
-    calculatePosition() {
+    update() {
         this.checkInteractions();
 
         if (this.wetness > 0) {
@@ -184,7 +163,7 @@ class Ash extends ParticleSolid {
         this.color = `hsl(0, 0%, ${30 + myRandom() * 20}%)`;
     }
 
-    calculatePosition() {
+    update() {
         if (this.y + 1 >= sandbox[0].length) return;
     
         let px = this.x;
@@ -204,11 +183,11 @@ class Ash extends ParticleSolid {
                     moved = true;
                 } else {
                     let dir = myRandom() < 0.5 ? -1 : 1;
-                    if (this.canMoveTo(this.x + dir, this.y + 1) && (this.canMoveTo(this.x + dir, this.y) || this.canMoveTo(this.x, this.y + 1))) {
+                    if (this.canMoveTo(this.x + dir, this.y + 1)) {
                         this.x += dir;
                         this.y += 1;
                         moved = true;
-                    } else if (this.canMoveTo(this.x - dir, this.y + 1) && (this.canMoveTo(this.x + dir, this.y) || this.canMoveTo(this.x, this.y + 1))) {
+                    } else if (this.canMoveTo(this.x - dir, this.y + 1)) {
                         this.x -= dir;
                         this.y += 1;
                         moved = true;

@@ -32,7 +32,7 @@ class Particle{
         this.color = "red";
     }
 
-    calculatePosition(){
+    update(){
 
     }
 

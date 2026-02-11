@@ -5,25 +5,8 @@ class ParticleLiquid extends Particle{
         this.isGravity = true;
         this.flowRate = 1;
     }
-}
 
-class Water extends ParticleLiquid{
-    constructor(x,y){
-        super(elementType.WATER, x, y);
-        this.isFlammable = false;
-        this.density = 1000;
-
-        this.flowRate = 5;
-    
-        this.color = `hsl(${200 + myRandom() * 15}, 80%, ${35 + myRandom() * 15}%)`;
-    }
-
-    calculatePosition() {
-
-        if(myRandom()<0.005){ 
-            this.color = `hsl(${200 + myRandom() * 15}, 80%, ${35 + myRandom() * 15}%)`;
-        }
-
+    calculatePosition(){
         if (this.y + 1 >= sandbox[0].length) return;
     
         let px = this.x;
@@ -37,11 +20,11 @@ class Water extends ParticleLiquid{
         
         if (!moved) {
             let dir = myRandom() < 0.5 ? -1 : 1;
-            if (this.canMoveTo(this.x + dir, this.y + 1) && (this.canMoveTo(this.x + dir, this.y) || this.canMoveTo(this.x, this.y + 1))) {
+            if (this.canMoveTo(this.x + dir, this.y + 1)) {
                 this.x += dir;
                 this.y += 1;
                 moved = true;
-            } else if (this.canMoveTo(this.x - dir, this.y + 1) && (this.canMoveTo(this.x - dir, this.y) || this.canMoveTo(this.x, this.y + 1))) {
+            } else if (this.canMoveTo(this.x - dir, this.y + 1)) {
                 this.x -= dir;
                 this.y += 1;
                 moved = true;
@@ -68,5 +51,25 @@ class Water extends ParticleLiquid{
         }
     
         if (moved) this.updateSandBox(px, py);
+    }
+}
+
+class Water extends ParticleLiquid{
+    constructor(x,y){
+        super(elementType.WATER, x, y);
+        this.isFlammable = false;
+        this.density = 1000;
+
+        this.flowRate = 5;
+    
+        this.color = `hsl(${200 + myRandom() * 15}, 80%, ${35 + myRandom() * 15}%)`;
+    }
+
+    update() {
+        if(myRandom()<0.005){ 
+            this.color = `hsl(${200 + myRandom() * 15}, 80%, ${35 + myRandom() * 15}%)`;
+        }
+
+        this.calculatePosition();
     }
 }

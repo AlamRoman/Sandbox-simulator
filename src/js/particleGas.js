@@ -8,14 +8,14 @@ class ParticleGas extends Particle{
 class Fire extends Particle {
     constructor(x, y) {
         super(elementType.FIRE, x, y);
-        this.isGravity = false;
+        this.isGravity = true;
         this.density = 5;
 
         this.life = 5 + myRandom() * 20;
         this.color = `hsl(${10 + myRandom() * 20}, 100%, 50%)`;
     }
 
-    calculatePosition() {
+    update() {
 
         if (sandbox[this.x][this.y] !== this) {
             deleteParticle(this.x, this.y);
@@ -39,7 +39,7 @@ class Fire extends Particle {
         let dirX = myRandom() < 0.5 ? -1 : 1;
 
         if(myRandom() < 0.2){
-            if (this.canMoveTo(this.x + dirX, this.y + dirY) && (this.canMoveTo(this.x + dirX, this.y) || this.canMoveTo(this.x, this.y + dirY))) {
+            if (this.canMoveTo(this.x + dirX, this.y + dirY)) {
                 this.x += dirX;
                 this.y += dirY;
                 moved = true;
@@ -48,7 +48,7 @@ class Fire extends Particle {
             if (this.canMoveTo(this.x, this.y + dirY)) {
                 this.y += dirY;
                 moved = true;
-            } else if (this.canMoveTo(this.x + dirX, this.y + dirY) && (this.canMoveTo(this.x + dirX, this.y) || this.canMoveTo(this.x, this.y + dirY))) {
+            } else if (this.canMoveTo(this.x + dirX, this.y + dirY)) {
                 this.x += dirX;
                 this.y += dirY;
                 moved = true;
@@ -95,7 +95,7 @@ class Fire extends Particle {
 class Steam extends Particle {
     constructor(x, y) {
         super(elementType.STEAM, x, y);
-        this.isGravity = false;
+        this.isGravity = true;
         this.isFlammable = false;
         this.density = 10;
         this.maxLife = 300 + myRandom() * 100;
@@ -103,7 +103,7 @@ class Steam extends Particle {
         this.color = "white";
     }
 
-    calculatePosition() {
+    update() {
         this.life--;
 
         if (this.life <= 0) {
