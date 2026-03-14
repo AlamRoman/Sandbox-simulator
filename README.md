@@ -16,7 +16,7 @@ Sandbox Simulator is an interactive particle simulation, where you can create an
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/Sandbox-simulator.git
+   git clone https://github.com/AlamRoman/Sandbox-simulator
    ```
 2. Navigate to the project directory:
    ```bash
