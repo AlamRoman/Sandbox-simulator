@@ -35,7 +35,11 @@ window.addEventListener('keydown', (event) => {
         selectedElement = elementType.FIRE;
     }else if (event.key === '5') {
         selectedElement = elementType.WOOD;
-    } else if (event.key === 'c') {
+    }else if (event.key === '6') {
+        selectedElement = elementType.ASH;
+    } else if (event.key === '7') {
+        selectedElement = elementType.STEAM;
+    }  else if (event.key === 'c') {
         console.log("Deleting particles: ", particles.length);
         resetSandbox();
     }else if (event.key === 'e') {

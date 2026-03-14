@@ -3,7 +3,7 @@ const WIDTH  = 1000;
 const HEIGHT = 500;
 const ctx = canvas.getContext("2d");
 
-const PARTICLE_SIZE = 4;
+const PARTICLE_SIZE = 5;
 const GRID_WIDTH = Math.floor(WIDTH / PARTICLE_SIZE);
 const GRID_HEIGHT = Math.floor(HEIGHT / PARTICLE_SIZE);
 
@@ -18,13 +18,6 @@ let particles = [];
 // ----------------------------------------------
 
 resetSandbox();
-
-//particles.push(new Sand(20, 10));
-
-/* particles.push(new Water(30, 15));
-particles.push(new Stone(40, 10)); */
-
-//console.log(particles[0], sandbox);
 
 fixDPI(canvas, ctx);
 

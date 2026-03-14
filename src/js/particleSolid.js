@@ -160,7 +160,7 @@ class Ash extends ParticleSolid {
         this.isFlammable = false;
         this.density = 400;
 
-        this.color = `hsl(0, 0%, ${30 + myRandom() * 20}%)`;
+        this.color = `hsl(0, 0%, ${10 + myRandom() * 10}%)`;
     }
 
     update() {
